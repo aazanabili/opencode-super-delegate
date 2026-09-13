@@ -16,6 +16,7 @@ Use compact artifacts such as:
 .orchestrator/runs/<run-id>/tasks/<task-id>/<attempt-id>/clean-code-report.json
 .orchestrator/runs/<run-id>/tasks/<task-id>/<attempt-id>/security-report.json
 .orchestrator/runs/<run-id>/tasks/<task-id>/<attempt-id>/correction-report.json
+.orchestrator/runs/<run-id>/tasks/<task-id>/<attempt-id>/testing-report.json
 .orchestrator/handoffs/
 ```
 

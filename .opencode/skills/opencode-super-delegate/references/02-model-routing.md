@@ -15,6 +15,8 @@ not permission to make unapproved provider requests.
 3. Propose L1 planning/coordinator and independent review leads cheaper than L0;
    L2 implementers/reviewers cheaper than their leads; L3 mechanical helpers
    cheaper again, only where delegation has a net benefit.
+   Include a Testing lead/test-writing role for application work, with approved
+   test-path edits, bounded execution and reserved regression-check budget.
 4. For each role state exact provider/model ID, estimated relative cost and its
    source/uncertainty, task fitness, allowed child roles/models, permissions,
    allowed fallbacks, variant if supported, and budget. Providers are unrestricted

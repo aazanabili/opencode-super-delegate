@@ -31,6 +31,11 @@ Return `PASS`, `FAIL`, or `BLOCKED`. Include severity, file/line evidence,
 reason, required correction, and verification commands. An unrun required
 check cannot produce `PASS`.
 
+Review the Testing report and test diffs: persistent core/new-behavior coverage,
+independent expectations, discovery/execution, and justification for changed or
+removed assertions. Testing supplies execution evidence; Clean Code checks its
+integrity without repeating valid unchanged runs.
+
 Bind the report to an immutable candidate identity, not a mutable branch name.
 Send failures through [correction](07-correction-agent.md). Re-review changed
 areas and invalidated evidence after repairs/integration; route concise verified

@@ -17,6 +17,11 @@ inspection. Neither a worker nor a lead may accept the final candidate.
 
 ## Allocation rules
 
+Testing follows the same hierarchy: a cheaper L1 lead owns the coverage strategy
+and result synthesis; authorized cheaper L2 test writers/runners produce persistent
+tests and regression evidence. L3 helpers only inventory tests/callers. Reserve
+their calls/resources in the shared budget and reuse valid evidence across gates.
+
 - Prefer progressively cheaper models for downward edges, with sufficient tool
   and reasoning ability. Unknown prices must be disclosed; user-approved tier
   ordering can be used without claiming numerical savings.

@@ -3,7 +3,7 @@ name: opencode-super-delegate
 description: Use when the user requests OpenCode Super Delegate or wants a premium model to retain final authority while cascading planning, execution, and review through progressively cheaper OpenCode models with compact upward reports.
 compatibility: Requires an agent host with file and terminal tools, installed OpenCode CLI, Git for mutation tasks, and configured model access.
 metadata:
-  version: "1.2.0"
+  version: "1.3.0"
 ---
 
 # OpenCode Super Delegate
@@ -39,9 +39,13 @@ cost including rework and coordination, not just the price of one model call.
 - Separate roles/sessions and keep context bounded. Branch per mutating task;
   sequential by default, isolated worktrees for concurrent mutation. A worktree
   is not a sandbox. Only the orchestrator accepts and integrates work.
-- Maintain Project Plan, Clean Code and Security decisions for every candidate.
+- Maintain Project Plan, Testing, Clean Code and Security decisions for every candidate.
   Security may conclude NOT_APPLICABLE with evidence for low-risk work; this is
   not a claim that a full security review passed. Never accept unverified gates.
+- Testing creates persistent executable tests in the target project for core and
+  new functional behavior, updates tests for approved contract changes, and runs
+  affected regressions after each coherent modification. Never rewrite expected
+  results just to make a regression pass. Load its modules only when applicable.
 - Preserve every applicable source requirement using the completeness protocol.
   Never infer success from a PASS keyword, worker prose, or file existence.
 
@@ -58,6 +62,7 @@ Read the linked module at its trigger, not the entire reference directory.
 | Planning / acceptance | [Project Plan](references/03-project-plan-agent.md) |
 | Mutation / isolation | [Implementation](references/04-implementation-isolation.md) |
 | Quality review | [Clean Code](references/05-clean-code-agent.md) |
+| Test planning / functional change | [Testing](references/16-testing-agent.md) |
 | Risk classification / sensitive work | [Security](references/06-security-agent.md) |
 | Failed check | [Correction](references/07-correction-agent.md) |
 | Handoff / continuation | [Context](references/08-context-and-state.md) |
@@ -76,7 +81,9 @@ Read the linked module at its trigger, not the entire reference directory.
    approved bounds return for a focused decision; routine refinements do not.
 4. Execute approved tasks. Begin applicable Security review at requirements and
    architecture, then revisit it as sensitive stages/diffs change.
-5. Run checks and independent Clean Code/Security review on the actual candidate.
+5. Testing creates/maintains and executes tests after each coherent functional
+   change, including affected existing regressions. Run independent Clean Code/
+   Security review on the actual candidate and require the Testing gate.
    Failures use a different approved correction model and bounded repair cycle.
 6. Project Plan verifies acceptance/traceability. A delegated integration operator
    prepares and verifies the combined candidate without accepting it. L0 reviews
@@ -85,4 +92,4 @@ Read the linked module at its trigger, not the entire reference directory.
 
 For small tasks combine roles in the current host when appropriate and disclose
 that no separate agents ran. Retain proportionate planning, quality review and
-security applicability decisions; do not invent application tests for prose.
+security/testing applicability decisions; do not invent application tests for prose.

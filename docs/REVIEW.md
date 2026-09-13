@@ -32,7 +32,11 @@ installed OpenCode CLI help (1.18.30), and official agent documentation.
 
 Verified package results:
 
-- Entry point: 88 lines; 23 Markdown files in the installable skill directory.
+- Version 1.2.0 review baseline: entry point 88 lines; 23 Markdown files in the
+  installable skill directory. Version 1.3.0 adds three Testing reference modules.
+- Version 1.3.0 package check: entry point 95 lines; 26 skill Markdown files;
+  local links and JSON examples valid; workflow YAML parses with valid descending
+  child tiers and Testing roles. Policy source identities/coverage remain intact.
 - Policy indexes: 24 Clean Code rows, 21 Project Plan rows, 44 Security rows;
   all nonblank source lines covered, including compact and full versions.
 - Original text identity: all three pre-move Git blob hashes were reconstructed
@@ -61,6 +65,13 @@ remain runtime acceptance checks, not passed tests. No commit, push or PR was ma
 
 ## Runtime acceptance checklist
 
+Version 1.3.0 adds a first-class Testing lead, persistent test authoring, per-change
+regression execution, approved test-writer permissions, testing-report evidence,
+YAML routing and final acceptance integration. Source policy texts are unchanged.
+Package/link/example validation applies; provider-backed testing-agent behavior
+still needs the runtime scenarios below. No sample application was created merely
+to manufacture a successful testing-agent run.
+
 In a disposable authorized project, approve real model IDs and a bounded budget:
 
 1. Verify skill discovery and paths with the complete folder installed.
@@ -75,3 +86,9 @@ In a disposable authorized project, approve real model IDs and a bounded budget:
 7. Confirm only L0 accepts the final candidate and publication respects approval.
 8. Measure observed total cost/latency including coordination and rework before
    claiming savings against a defined baseline.
+9. Create a small functional application task: require persistent discovered tests
+   for its core behavior, then verify a deliberate regression is detected after a
+   later modification. Restore the intended behavior without weakening tests.
+10. Change a requirement explicitly and verify only justified corresponding
+    expectations change; unrelated regressions stay intact. Confirm zero-test,
+    skipped-required-test and unavailable-runner outcomes cannot produce PASS.

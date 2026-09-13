@@ -38,6 +38,14 @@ roles:
     tier: 2
     model: "provider/different-correction-model-id"
     allowed_children: []
+  testing:
+    tier: 1
+    model: "provider/testing-lead-model-id"
+    allowed_children: [test_writer, inventory]
+  test_writer:
+    tier: 2
+    model: "provider/cheaper-test-model-id"
+    allowed_children: [inventory]
 limits:
   repair_attempts_per_cycle: 3
   max_repair_cycles: 2
@@ -46,6 +54,7 @@ limits:
 permissions:
   automatic_helpers: read_only
   correction_edits: false
+  testing_edits: true
 git:
   branch_prefix: "super-delegate/"
   commit: false
@@ -56,6 +65,13 @@ git:
 All example model IDs are nonfunctional placeholders; discover real IDs. L0 is
 the current premium owner, not a child role. Defaults for Git authority are false
 until explicitly requested/approved; authorized tasks may enable them.
+
+`testing_edits` is a boolean proposal for assigned test/fixture-path writes and
+bounded test execution, confirmed in the initial approval and translated into
+real runtime controls. It never grants arbitrary shell or production-code edits.
+When false, Testing proposes tests and an already-authorized worker writes/runs
+them. Functional application work still requires the Testing gate when an older
+YAML omits these roles; include them in the effective proposal before approval.
 
 Validation: reject unknown fields, duplicate keys, unsafe tags, cyclic aliases,
 invalid types, out-of-range/non-finite limits and nonexistent child roles. Tiers

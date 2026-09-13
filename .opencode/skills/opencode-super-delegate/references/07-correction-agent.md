@@ -26,6 +26,10 @@ invalidates dependent review evidence. Do not weaken assertions, remove controls
 change criteria, or retry unknown external side effects without reconciliation.
 Environment failures do not justify speculative product edits.
 
+Return repairs to [Testing](16-testing-agent.md) for regression impact assessment
+and required execution. Unexpected failures never justify changing test expectations
+without an approved contract or a demonstrated test defect.
+
 For quarantine, read full source Plan H/M before cleanup: retain a verified
 reconstructable recovery package, protect sensitive artifacts, fence owned
 processes and preserve unrelated work. Escalate concise diagnostics via

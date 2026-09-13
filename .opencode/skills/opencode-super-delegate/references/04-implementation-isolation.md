@@ -18,7 +18,9 @@ Git references, or unassigned paths.
 ## Execution
 
 Implementation agents follow an approved task contract, run focused checks,
-and leave evidence. They do not silently broaden scope. Shared files such as
+coordinate persistent tests with [Testing](16-testing-agent.md) after each coherent
+functional change, and preserve tests for unaffected behavior. They leave evidence
+and do not silently broaden scope. Shared files such as
 lockfiles, CI configuration, public contracts, and migrations enter a
 serialized integration queue.
 

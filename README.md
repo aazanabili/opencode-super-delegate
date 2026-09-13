@@ -8,7 +8,7 @@ upward, while final acceptance stays with the premium owner.
 
 ```text
 L0 Premium owner — goals, commands, exceptions, final decision
-  └─ L1 Cheaper leads — Project Plan, coordination, quality/security synthesis
+  └─ L1 Cheaper leads — Project Plan, Testing, quality/security synthesis
        └─ L2 Cheaper specialists — implementation, focused review, correction
             └─ L3 Economical helpers — narrow discovery and inspection
 ```
@@ -26,7 +26,7 @@ savings percentage or universal correctness.
   both compact and full versions, bundled with exhaustive section/range indexes.
 - Mandatory one-time interactive approval of the routing tree, permissions,
   budgets and requested Git actions.
-- Project Plan acceptance, Clean Code review and a Security decision tied to the
+- Project Plan acceptance, Testing, Clean Code review and a Security decision tied to the
   same candidate. Sensitive work receives security review from design onward.
 
 This is an **instruction package**, not an installed agent fleet, YAML executor,
@@ -139,6 +139,30 @@ OpenCode configuration file. Replace all placeholder model IDs before use.
 
 ## Permissions, quality and cost
 
+### Automatic persistent testing
+
+The **Testing** role creates real test files in each target application using its
+existing stack and test conventions. Core and new functional behavior receives
+executable coverage. Tests persist with the app for future changes; a JSON report
+alone is not coverage, and there is no generic framework forced on every project.
+
+After each coherent functional change, Testing runs new/updated tests and affected
+existing regressions. Final integration runs the relevant regression suite, with
+broader checks for shared changes or uncertain impact. Missing required checks
+block acceptance. Tests are updated for approved behavior changes or demonstrated
+test defects, never simply to make broken output pass.
+
+This role uses cheaper leads/specialists, approved test-path writes and bounded
+execution. Clean Code independently checks test integrity; the premium owner
+receives a compact result and retains acceptance authority. No always-running
+watcher is installed; execution occurs as part of the skill workflow.
+
+Read [Testing](.opencode/skills/opencode-super-delegate/references/16-testing-agent.md),
+[test authoring](.opencode/skills/opencode-super-delegate/references/17-test-authoring.md)
+and [regression execution](.opencode/skills/opencode-super-delegate/references/18-test-execution.md).
+
+### Execution controls
+
 - Automatic helpers have read/search and only genuinely read-only terminal use;
   unrestricted shell access would defeat `edit: deny`.
 - Explicit workers can receive approved edit/test/Git capabilities. Automatically
@@ -176,7 +200,7 @@ docs/
 .opencode/skills/opencode-super-delegate/
   SKILL.md
   references/
-    00-policy-completeness.md … 15-report-escalation.md
+    00-policy-completeness.md … 18-test-execution.md
     policies/
       Clean Code.md          # complete retrieval index
       Project Plan.md        # complete retrieval index

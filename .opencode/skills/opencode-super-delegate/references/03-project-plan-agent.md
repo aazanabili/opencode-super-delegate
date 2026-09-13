@@ -14,6 +14,9 @@ applicable exact ranges under [coverage](00-policy-completeness.md).
 - Assign owned paths and mark shared files for serialized integration.
 - Select required specialists and propose model routing.
 - Define commands, evidence, budgets, retry limits, and escalation conditions.
+- Assign [Testing](16-testing-agent.md) from the first functional slice: map
+  core/new behavior to persistent tests, select the runner and baseline, reserve
+  test-writer authority/resources, and require per-increment regression evidence.
 - Preserve all seven SDLC phases with scoped deliverables/gates or justified
   exclusions. Map applicable A1–A12 responsibilities, including contract-first
   slice packages, platform/privacy requirements, release and operations.

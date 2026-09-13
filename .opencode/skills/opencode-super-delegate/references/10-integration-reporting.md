@@ -22,7 +22,9 @@ separate recorded operation; uncertain push/PR outcomes require reconciliation
 before retry. Deployment/monitoring require their own scoped authority and proof.
 
 Completion requires `Project Plan` pass, `Clean Code` pass, and applicable
-`Security` pass. `NOT_APPLICABLE` must have a recorded reason; blocked or
+`Testing` and `Security` passes. For application functionality, Testing requires
+persistent tests covering core/new behavior and passing required regressions on
+the final candidate. `NOT_APPLICABLE` must have a recorded reason; blocked or
 unverified required checks are not approval.
 
 Use exactly these five top-level Markdown bullets unless the user requests a

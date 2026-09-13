@@ -14,6 +14,7 @@ validate containment, ownership and symlink/reparse behavior before writes.
 | Task result | identity fields, policy_version, state_revision, status, actual_model, session_id, base_revision, candidate_id, dependency_versions, changed_paths, artifacts, checks, coverage, findings, counters, resource_refs, decisions, blockers, next_actions, UTC timestamp |
 | Gate / review | task/candidate/policy identity, gate, reviewer/model, status, findings with severity/path/line/control/evidence/remediation, checks, coverage/exclusions, residual_risks, recommended_decision |
 | Coverage | source/version, section/clause, applicability/rationale, enforcement_point, implementation_evidence, verification_evidence, status, owner, residual_risk |
+| Testing report | gate/review identity fields, behavior_test_map, added/updated test paths, contract-change reasons, baseline comparison, check counts when known, selected regression scope/rationale, untested gaps, blockers and next action |
 
 Each check records exact command or inspection method, target/environment,
 tested candidate, actual outcome, exit code if executed, and sanitized evidence
@@ -25,6 +26,10 @@ Only L0 authorizes DONE. Gate statuses: PASS, FAIL, BLOCKED, NOT_EVALUATED,
 NOT_APPLICABLE. Check statuses may additionally be NOT_RUN/SKIPPED with reasons.
 An applicable required gate cannot pass with an unmet/unverified required check.
 Security NOT_APPLICABLE is allowed only with a recorded risk-based rationale.
+Testing NOT_APPLICABLE requires no applicable functional test obligation; it cannot
+excuse a new application/feature with no executable tests. Test files live in the
+target application's normal test layout; `testing-report.json` is evidence, not a
+substitute. Refer to [Testing](16-testing-agent.md) for the complete report fields.
 
 ## Validation and publishing
 

@@ -39,6 +39,12 @@ Do not allow a helper to bypass child restrictions by launching another CLI.
 
 ## Explicit workers and correction
 
+Testing is a designated task role, not an automatic read-only helper. Its initial
+approval must specify test/fixture writes and bounded execution (tests run code
+and may create temporary artifacts). If not authorized, it returns proposals for
+an authorized worker to apply/run. Shared runner/manifest changes are serialized;
+test authoring cannot silently grant dependency-install or product-edit authority.
+
 Explicitly summoned workers may have the full task-approved edit, terminal,
 branch, commit, push and PR capabilities. Grant only within the task's workspace,
 network and side-effect bounds; no protected-ref or global-state changes.
