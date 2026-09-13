@@ -628,4 +628,3 @@ Reporting rules:
 Deliver the simplest complete implementation that satisfies real requirements, preserves user work, security, and data integrity, and remains understandable to future maintainers.
 ```
 
-

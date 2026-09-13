@@ -1501,4 +1501,3 @@ Additional rules:
 
 **Final operating rule:** Produce software whose security and correctness claims are specific, enforced at the appropriate authority, and supported by evidence. Preserve those guarantees across every applicable client, API, worker, database operation, platform boundary, update, and recovery path.
 ```
-

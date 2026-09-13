@@ -1,46 +1,40 @@
-# Model Routing and Approval
+# Hierarchical model routing and one-time approval
 
-Use this module before delegation.
+Read [hierarchy](14-cost-hierarchy.md). L0 is the user's premium host model;
+do not call another premium planner by default. Discovery is capability metadata,
+not permission to make unapproved provider requests.
 
-## Discovery
+1. Check installed `opencode --version`, `opencode models --help`, then
+   `opencode models` as supported. Do not refresh remotely or probe every model.
+   When supported, `opencode models --verbose` exposes catalog metadata including
+   costs. Filter it into a small relevant candidate table instead of forwarding
+   the complete catalog to L0; catalog prices may differ from billing terms.
+2. Listing indicates a model catalog, not valid credentials, entitlement, price,
+   tool reliability or remaining quota. Use configured provider information and
+   user-known pricing; label unknown cost/capability explicitly. Do not expose keys.
+3. Propose L1 planning/coordinator and independent review leads cheaper than L0;
+   L2 implementers/reviewers cheaper than their leads; L3 mechanical helpers
+   cheaper again, only where delegation has a net benefit.
+4. For each role state exact provider/model ID, estimated relative cost and its
+   source/uncertainty, task fitness, allowed child roles/models, permissions,
+   allowed fallbacks, variant if supported, and budget. Providers are unrestricted
+   within available access: hosted, gateways, subscriptions or local endpoints.
+5. Prefer an approved DeepSeek or Flash-class option for bounded correction when
+   suitable; correction must differ from the failed implementer's model. A brand
+   alone is not evidence of cost, quality, or independence.
 
-Discover models with the installed OpenCode capability, commonly:
+Always obtain one interactive approval before delegated planning or execution.
+It covers the hierarchy, permitted child edges, automatic fan-out within limits,
+budget caps, branch strategy, permission ceilings, correction capabilities and
+Git side effects. No YAML switch may disable it. Approval of a family of bounded
+tasks permits routine allocation without repeated questions.
 
-```text
-opencode models
-```
+If price ordering is unknown, disclose it and obtain approval of an explicit
+relative tier map; never claim measured savings. Do not choose a more expensive
+or unlisted fallback silently. After approval, a minimal first real task can
+verify access. Authentication/rate-limit failures are environment findings,
+not permission to switch providers or retry indefinitely.
 
-Do not invent provider names or model IDs. If discovery fails, ask the user to
-provide valid identifiers. Group discovered models by likely strengths and
-cost, but treat those labels as recommendations rather than facts unless the
-provider exposes them.
-
-## Proposal
-
-Propose one model per role:
-
-- Planning and architecture: strongest suitable model.
-- Implementation: capable cost-effective coding model.
-- Clean Code and Security: independent model with suitable review quality.
-- Correction: low-cost DeepSeek or Flash-class model when available.
-- Helper sub-agents: low-cost models for bounded inspection and summaries.
-
-Explain the reason, expected tradeoff, and fallback for every proposal.
-
-## One-Time Interactive Approval
-
-Ask once for approval of the complete plan:
-
-- model per role and fallback;
-- automatic agent count;
-- sequential/parallel schedule;
-- branch/worktree strategy;
-- permissions per role;
-- commit, push, merge, and pull-request authority.
-
-Accept `yes`, `modify`, or `cancel`. A material change in scope, risk,
-permissions, model routing, or external side effects requires a new approval.
-Do not ask repeatedly for unchanged routing.
-
-Explicit YAML values override recommendations, but cannot override platform
-instructions or runtime-enforced permissions.
+Changes outside approved scope/ceilings need a focused decision. Inside those
+bounds, L1 may select approved cheaper children/fallbacks autonomously. Escalation
+to L0 supplies a report for decision, not automatic premium implementation.

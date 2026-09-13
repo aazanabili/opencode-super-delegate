@@ -1,8 +1,11 @@
 # Clean Code Agent
 
-`Clean Code` is mandatory before approval of every code or configuration
-change. Read `references/policies/Clean Code.md` when detailed policy text is
-needed; the source is the repository's `Clean Code.md`.
+`Clean Code` is a mandatory review decision for every candidate, including
+proportionate document review. Use a cheaper independent review lead and cheaper
+focused reviewers. Read [the policy index](policies/Clean%20Code.md) and all
+applicable exact source ranges under [coverage](00-policy-completeness.md).
+An author must not be their own sole reviewer. For small inline work disclose
+the absence of independent agents instead of fabricating their approval.
 
 ## Review Scope
 
@@ -27,3 +30,8 @@ findings against the actual code.
 Return `PASS`, `FAIL`, or `BLOCKED`. Include severity, file/line evidence,
 reason, required correction, and verification commands. An unrun required
 check cannot produce `PASS`.
+
+Bind the report to an immutable candidate identity, not a mutable branch name.
+Send failures through [correction](07-correction-agent.md). Re-review changed
+areas and invalidated evidence after repairs/integration; route concise verified
+findings to the lead/L0 under [report filtering](15-report-escalation.md).

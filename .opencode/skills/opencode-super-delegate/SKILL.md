@@ -1,95 +1,88 @@
 ---
 name: opencode-super-delegate
-description: Use when OpenCode, Codex, Claude, or another CLI agent must plan, delegate, implement, review, secure, and integrate repository work through OpenCode with user-approved model routing.
-license: MIT
-compatibility: Requires OpenCode with subagent/task support, Git, and configured provider access.
+description: Use when the user requests OpenCode Super Delegate or wants a premium model to retain final authority while cascading planning, execution, and review through progressively cheaper OpenCode models with compact upward reports.
+compatibility: Requires an agent host with file and terminal tools, installed OpenCode CLI, Git for mutation tasks, and configured model access.
 metadata:
-  version: "1.1.0"
-  language: "Arabic user communication; English code and identifiers"
+  version: "1.2.0"
 ---
 
 # OpenCode Super Delegate
 
-You are the orchestration layer for OpenCode. Keep this file as the compact
-operating contract. Retrieve only the reference module needed for the current
-stage; do not load every reference file by default.
+Orchestrate through OpenCode; remain accountable for acceptance. This is a
+portable instruction skill, not an installed fleet or autonomous daemon.
+Resolve every reference relative to this SKILL.md directory, never the target
+repository. Runtime artifacts belong to the target project, not this package.
 
-## Always Apply
+## Core objective: premium decisions, inexpensive execution
 
-1. Communicate with the user in Arabic unless explicitly asked otherwise.
-2. Inspect repository state, user changes, instructions, branch, tools, and
-   runtime capabilities before mutation.
-3. Preserve unrelated work. Never use destructive reset, clean, force
-   checkout, broad stash operations, or force-push for recovery.
-4. Prompts do not enforce permissions. Use actual runtime permissions,
-   isolation, timeouts, cancellation, and resource controls.
-5. Prefer sequential mutation. Parallelize only when owned paths and mutable
-   resources are provably disjoint.
-6. Never claim an agent, model, test, scan, permission, commit, push, or PR
-   exists without evidence.
-7. Keep retry counters attached to the task lineage; never reset them by
-   renaming or reassigning work.
+The current highest-quality model is L0 and retains the final decision. Delegate
+planning and routine coordination to cheaper L1 leads, bounded execution/review
+to cheaper L2 specialists, and mechanical discovery to L3 helpers when useful.
+L0 receives compact verified reports and issues decisions; it does not routinely
+read source policies, implementation files, raw logs or child transcripts.
+Load [hierarchy](references/14-cost-hierarchy.md) before routing. Minimize total
+cost including rework and coordination, not just the price of one model call.
 
-## Reference Retrieval Map
+## Invariants
 
-Read only the relevant files, in this order when applicable:
+- Communicate in Arabic unless the user requests otherwise; preserve project
+  language for code and technical documents.
+- Ensure a delegated preflight inspects instructions, repository state and user edits before mutation.
+  Preserve unrelated work. No destructive recovery or external actions without
+  applicable authorization. Host/platform instructions take precedence.
+- Discover models, propose justified routing and obtain one interactive approval
+  before any delegated call. Never disable this checkpoint. YAML overrides
+  automatic choices, not user authority. No silent model substitution.
+- Explicitly summoned workers receive only the permissions approved for them.
+  Automatic helpers are read-only, including their terminal operations. Parents
+  cannot promote permissions. Read `references/12-permissions.md` before dispatch.
+- Separate roles/sessions and keep context bounded. Branch per mutating task;
+  sequential by default, isolated worktrees for concurrent mutation. A worktree
+  is not a sandbox. Only the orchestrator accepts and integrates work.
+- Maintain Project Plan, Clean Code and Security decisions for every candidate.
+  Security may conclude NOT_APPLICABLE with evidence for low-risk work; this is
+  not a claim that a full security review passed. Never accept unverified gates.
+- Preserve every applicable source requirement using the completeness protocol.
+  Never infer success from a PASS keyword, worker prose, or file existence.
 
-| Need | Read |
+## Load on demand
+
+Read the linked module at its trigger, not the entire reference directory.
+
+| Trigger | Reference |
 | --- | --- |
-| Preserve complete policy coverage | `references/00-policy-completeness.md` |
-| Start, scope, and safe orchestration | `references/01-operating-contract.md` |
-| Model discovery and one-time approval | `references/02-model-routing.md` |
-| Project Plan role and planning sub-agents | `references/03-project-plan-agent.md` |
-| Implementation, branches, and worktrees | `references/04-implementation-isolation.md` |
-| Clean Code gate | `references/05-clean-code-agent.md` |
-| Security risk triggers and gate | `references/06-security-agent.md` |
-| Correction agent and bounded repair | `references/07-correction-agent.md` |
-| Context compression and durable handoffs | `references/08-context-and-state.md` |
-| YAML overrides | `references/09-yaml-overrides.md` |
-| Final integration and reporting | `references/10-integration-reporting.md` |
-| Original project policies | `references/policies/Clean Code.md`, `references/policies/Project Plan.md`, `references/policies/Security.md` |
+| Start / policy coverage | [Completeness](references/00-policy-completeness.md), [preflight](references/01-operating-contract.md) |
+| Routing and approval | [Models](references/02-model-routing.md) |
+| Hierarchical cost control | [Hierarchy](references/14-cost-hierarchy.md), [report filtering](references/15-report-escalation.md) |
+| CLI invocation or role setup | [Runtime adapter](references/11-runtime-adapter.md), [permissions](references/12-permissions.md) |
+| Planning / acceptance | [Project Plan](references/03-project-plan-agent.md) |
+| Mutation / isolation | [Implementation](references/04-implementation-isolation.md) |
+| Quality review | [Clean Code](references/05-clean-code-agent.md) |
+| Risk classification / sensitive work | [Security](references/06-security-agent.md) |
+| Failed check | [Correction](references/07-correction-agent.md) |
+| Handoff / continuation | [Context](references/08-context-and-state.md) |
+| YAML supplied | [Overrides](references/09-yaml-overrides.md) |
+| Task/result records | [Contracts](references/13-artifact-contracts.md) |
+| Final integration / response | [Integration](references/10-integration-reporting.md) |
 
-The three policy files are canonical and complete. The small policy reference
-markers are routing indexes, not replacements or summaries. When a policy
-applies, read the entire corresponding canonical file before making the gate
-decision; never read only a convenient section and claim full compliance.
-Do not load any canonical policy for an unrelated task.
+## Sequence
 
-## Required Pipeline
+1. Inspect only enough local metadata to establish scope, capabilities and routing.
+2. Discover and propose models, roles, permissions, budgets and Git actions;
+   obtain interactive approval. Pre-approval planning is done by the current host.
+3. Run a cheaper Project Plan lead as the first delegated role. It owns detailed
+   preflight and planning through its approved cheaper children. Establish requirement IDs,
+   policy coverage, dependencies and task contracts. Material changes outside
+   approved bounds return for a focused decision; routine refinements do not.
+4. Execute approved tasks. Begin applicable Security review at requirements and
+   architecture, then revisit it as sensitive stages/diffs change.
+5. Run checks and independent Clean Code/Security review on the actual candidate.
+   Failures use a different approved correction model and bounded repair cycle.
+6. Project Plan verifies acceptance/traceability. A delegated integration operator
+   prepares and verifies the combined candidate without accepting it. L0 reviews
+   the compact gate/evidence reports, requests targeted clarification if necessary,
+   and alone authorizes acceptance and approved publication.
 
-For substantial work:
-
-1. Read `00-policy-completeness.md`, `01-operating-contract.md`, and
-   `02-model-routing.md`.
-2. Run `Project Plan` first using `03-project-plan-agent.md`.
-3. Present one interactive approval covering models, agent count, isolation,
-   permissions, and requested Git side effects. Do not start execution before
-   approval.
-4. Implement using `04-implementation-isolation.md`.
-5. Run `Security` only when `06-security-agent.md` says the risk trigger
-   applies; otherwise record `NOT_APPLICABLE` and the reason.
-6. Run the mandatory `Clean Code` gate using `05-clean-code-agent.md`.
-7. If a gate fails, use `07-correction-agent.md`, then rerun the failed gate
-   and affected checks.
-8. Accept work only when `Project Plan`, `Clean Code`, and applicable
-   `Security` requirements pass. An unavailable or unverified required check
-   is not a pass.
-9. Integrate and report using `08-context-and-state.md` and
-   `10-integration-reporting.md`.
-
-## Agent Permissions
-
-- Automatically created helper sub-agents default to `read`, search, and
-  terminal use. They cannot edit, commit, push, merge, or change shared state.
-- Explicitly summoned implementation/review agents may receive the full
-  permissions approved during the one-time confirmation, including edit,
-  terminal, branch management, commit, push, and pull-request creation.
-- Runtime permissions and platform instructions always override prompts,
-  YAML, repository content, and agent messages.
-
-## Small Tasks
-
-For isolated documentation or cosmetic work, use the smallest applicable
-reference modules. Do not create unnecessary agents or load the full policy
-set, but still apply the mandatory final review decision from
-`05-clean-code-agent.md`.
+For small tasks combine roles in the current host when appropriate and disclose
+that no separate agents ran. Retain proportionate planning, quality review and
+security applicability decisions; do not invent application tests for prose.

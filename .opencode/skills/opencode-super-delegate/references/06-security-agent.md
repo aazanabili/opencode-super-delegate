@@ -1,7 +1,8 @@
 # Security Agent
 
-Read `references/policies/Security.md` when detailed controls are needed; the
-source is the repository's `Security.md`.
+Use a cheaper qualified independent Security lead and approved cheaper focused
+specialists. Read [the index](policies/Security.md), classify all sections and
+retrieve complete applicable ranges under [coverage](00-policy-completeness.md).
 
 ## Run Security Automatically When
 
@@ -12,6 +13,12 @@ permissions, updates, migrations, persistence, IPC, native code, privilege,
 cryptography, payments, production configuration, or broad shared
 infrastructure. Also run it when the plan or diff reveals material threat
 uncertainty.
+
+Review sensitive requirements/architecture before implementation, relevant
+development/release stages, and the final actual diff. Always reassess risk after
+changes. Agent instructions and permission configuration are execution controls,
+not automatically low-risk prose. Source Plan L defines tiers 0–4 and source
+Security A/I/J applies across relevant security work.
 
 For isolated prose, comments, or cosmetic changes with no executable,
 configuration, dependency, permission, data, or trust-boundary effect, record
@@ -28,3 +35,9 @@ their own findings.
 Return `PASS`, `FAIL`, or `BLOCKED`, with evidence, affected paths, residual
 risk, and required remediation. A clean scanner result is not proof of
 security; unavailable required checks are not `PASS`.
+
+Record a clause-level Control Evidence Matrix per Security J5: control ID,
+applicability/rationale, enforcement point, implementation evidence, verification
+evidence, status, residual risk and owner. Preserve J7's seven output dimensions
+in the detailed security report; summarize them into the five-bullet final report
+without losing material information. L0 receives the compact decision packet.

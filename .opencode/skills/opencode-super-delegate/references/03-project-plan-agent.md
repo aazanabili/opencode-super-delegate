@@ -1,6 +1,10 @@
 # Project Plan Agent
 
-`Project Plan` is the O0 planning role and runs first for substantial work.
+`Project Plan` is a cheaper L1 planning lead, the first delegated role after
+approval. L0 remains O0/final authority; this lead does detailed preflight and
+planning, delegates to approved cheaper specialists, and reports to L0.
+Read [the complete policy index](policies/Project%20Plan.md) and retrieve all
+applicable exact ranges under [coverage](00-policy-completeness.md).
 
 ## Responsibilities
 
@@ -10,10 +14,17 @@
 - Assign owned paths and mark shared files for serialized integration.
 - Select required specialists and propose model routing.
 - Define commands, evidence, budgets, retry limits, and escalation conditions.
+- Preserve all seven SDLC phases with scoped deliverables/gates or justified
+  exclusions. Map applicable A1–A12 responsibilities, including contract-first
+  slice packages, platform/privacy requirements, release and operations.
+- Reconcile requirements against the final integrated candidate and report the
+  Project Plan acceptance decision to L0. A successful initial plan alone does
+  not satisfy final acceptance.
 
 ## Planning Helpers
 
-Create read-only sub-agents only when they reduce context or improve coverage.
+Create approved cheaper read-only sub-agents only when they reduce total cost
+or improve coverage. They may cascade further only within approved edges/budgets.
 Typical helpers are repository discovery, architecture, test discovery, and
 dependency/risk analysis. Helpers return concise reports; `Project Plan` owns
 the final plan and must reconcile contradictions.
@@ -23,6 +34,9 @@ the final plan and must reconcile contradictions.
 Each task includes task ID, lineage ID, owner, reviewer, objective, base
 revision, workspace, dependencies, owned paths, deliverables, risk tier,
 required checks, timeout, retry budget, and escalation conditions.
+Use the full fields in [contracts](13-artifact-contracts.md); this list is not
+a replacement for source Plan E. The lead proposes state updates; only the
+authorized controller updates authoritative global coordination records.
 
 Use the project's existing durable state convention. If none exists, prefer
 `.orchestrator/` with small JSON records and referenced logs rather than large

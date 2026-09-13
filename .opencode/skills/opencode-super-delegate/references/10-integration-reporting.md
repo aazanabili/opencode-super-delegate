@@ -2,6 +2,10 @@
 
 Run this module after gates pass.
 
+L0 retains the acceptance decision. A cheaper integration operator can prepare
+the candidate, inspect diffs and run checks under a bounded command contract.
+Send a concise evidence packet to L0, not raw logs; no worker promotes itself.
+
 1. Verify task ownership, base revision, policy version, risk, and evidence.
 2. Build a candidate from the current accepted revision.
 3. Apply changes through a serialized integration queue.
@@ -9,6 +13,13 @@ Run this module after gates pass.
 5. Run combined-candidate checks and inspect the final diff.
 6. Perform only the approved Git actions: branch management, commit, push,
    merge, or pull request.
+
+All gate reports must identify the same final candidate (commit or verified
+snapshot including untracked/binary task files). Branch movement, repairs,
+dependency changes and integration invalidate affected evidence. Reconcile and
+revalidate before L0 acceptance. Publication of the accepted candidate is a
+separate recorded operation; uncertain push/PR outcomes require reconciliation
+before retry. Deployment/monitoring require their own scoped authority and proof.
 
 Completion requires `Project Plan` pass, `Clean Code` pass, and applicable
 `Security` pass. `NOT_APPLICABLE` must have a recorded reason; blocked or

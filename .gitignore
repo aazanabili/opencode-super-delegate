@@ -1,0 +1,5 @@
+# Local coordination evidence and scratch outputs, not skill references
+.orchestrator/
+*.log
+.DS_Store
+Thumbs.db
