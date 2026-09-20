@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const root = process.cwd();
-const configPath = path.join(root, ".opencode", "opencode.jsonc");
+const configPath = process.env.OPENCODE_CONFIG_PATH ?? path.join(root, ".opencode", "opencode.jsonc");
 const source = fs.readFileSync(configPath, "utf8").replace(/^\s*\/\/.*$/gm, "");
 const config = JSON.parse(source.replace(/^\uFEFF/, ""));
 const agents = config.agents ?? {};
