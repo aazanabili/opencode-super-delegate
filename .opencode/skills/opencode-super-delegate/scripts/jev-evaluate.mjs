@@ -1,5 +1,3 @@
-import fs from "node:fs/promises";
-
 const endpoint = process.env.OPENCODE_ZEN_SYSTEMONE_URL ?? "https://opencode.ai/zen/v1/systemone";
 const apiKey = process.env.OPENCODE_API_KEY;
 
@@ -8,7 +6,10 @@ if (!apiKey) {
   process.exit(2);
 }
 
-const input = await fs.readFile(0, "utf8");
+let input = "";
+for await (const chunk of process.stdin) {
+  input += chunk.toString();
+}
 let request;
 try {
   request = JSON.parse(input);
