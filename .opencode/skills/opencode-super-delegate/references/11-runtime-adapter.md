@@ -7,15 +7,17 @@ nonexistent agent or assume the host Task API accepts per-call models.
 ## Capability check
 
 Use trusted installed help: `opencode --version`, `opencode run --help`,
-`opencode models --help`, `opencode agent list` when supported. Reference:
-[CLI](https://opencode.ai/docs/cli/), [agents](https://opencode.ai/docs/agents/),
-[configuration schema](https://opencode.ai/config.json).
-Flags below were inspected on OpenCode 1.18.30; recheck on the installed version.
+`opencode models --help`, and `opencode debug agents`. Reference the V2
+documentation for [CLI](https://opencode.ai/v2/docs/cli),
+[agents](https://opencode.ai/v2/docs/agents), and
+[configuration](https://opencode.ai/v2/docs/config). Recheck flags on the
+installed version.
 
 ## Two supported dispatch strategies
 
 1. **Native configured agents:** approved role/model pairs are registered in
-   project-local agent configuration with `permission.task` allowed-child edges.
+    project-local agent configuration with ordered `permissions` and explicit
+    `subagent` allowed-child edges.
    Use native Task only if the installed runtime supports the required caller,
    child/session and model controls. Do not assume a subagent can spawn children.
 2. **CLI role sessions:** use a verified primary/all agent with its model and
@@ -60,10 +62,12 @@ Never overwrite user global config. `OPENCODE_CONFIG_CONTENT` is another support
 child-scoped override; avoid leaking it into unrelated launches and restore any
 parent environment value. Do not put credentials in the config, brief or logs.
 
-Agent entries use `description`, `mode`, `model`, `prompt`, `permission` and
+Agent entries use `description`, `mode`, `model`, `system`, `permissions` and
 optionally finite `steps`. CLI-selectable roles use `mode: all` or `primary`;
-Task-only children use `subagent`. Inject the full approved policy packet and
-role brief, with skill-root paths, not the full skill orchestration loop.
+task-only children use `subagent`. Permission rules are ordered V2 rules with
+`action`, `resource` and `effect`; the last matching rule wins. Inject the full
+approved policy packet and role brief, with skill-root paths, not the full skill
+orchestration loop.
 
 Use actual host background/process tools if available; record process/session
 handles, bounded polling and command deadlines. A foreground terminal call is

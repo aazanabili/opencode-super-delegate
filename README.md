@@ -39,14 +39,15 @@ runtime controls. Installing the skill does not call models or publish code.
    Codex and Claude Code can act as the premium owner; another host can follow the
    same entry point when it supports these capabilities.
 2. An installed OpenCode CLI and configured provider authentication. Use the
-   [official installation guide](https://opencode.ai/docs/) for your platform.
+   [official installation guide](https://opencode.ai/v2/docs/) for your platform.
 3. Git for task branches/worktrees and an isolated execution environment suitable
    for the target project. No Node/Python dependency is introduced by this skill.
 4. Accessible, explicitly approved model IDs. A catalog listing alone does not
    prove access, current price, tool support or quota.
 
-CLI examples were checked against **OpenCode 1.18.30**. Other versions must be
-checked through installed help. Provider-backed execution is not certified by
+CLI examples and the agent configuration are aligned with the **OpenCode V2
+configuration format**. Recheck command flags through installed help because
+runtime versions can differ. Provider-backed execution is not certified by
 static package validation.
 
 ## Installation
@@ -197,6 +198,9 @@ docs/
   REVIEW.md
 .gitattributes
 .gitignore
+.opencode/
+  opencode.jsonc            # V2 agents, permissions, command and plugins
+  package.json              # local OpenCode plugin dependency
 .opencode/skills/opencode-super-delegate/
   SKILL.md
   references/

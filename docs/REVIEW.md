@@ -30,6 +30,18 @@ installed OpenCode CLI help (1.18.30), and official agent documentation.
 
 ## Validation boundaries
 
+### OpenCode V2 configuration update
+
+The project-local `.opencode/opencode.jsonc` now uses the V2 configuration
+shape: `agents`, per-agent `system`, ordered `permissions`, `plugins`, and the
+V2 `shell`/`subagent` permission actions. The command entry retains its
+explicit `agent: manager` target. The global user configuration is deliberately
+not modified by this repository update.
+
+The prompt-integrity validator reads V2 `system` contracts and validates the
+same 37-agent population. `opencode debug agents` and `opencode debug config`
+load the project configuration successfully on the checked OpenCode runtime.
+
 Verified package results:
 
 - Version 1.2.0 review baseline: entry point 88 lines; 23 Markdown files in the

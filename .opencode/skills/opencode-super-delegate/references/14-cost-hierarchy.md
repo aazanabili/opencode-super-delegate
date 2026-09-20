@@ -36,7 +36,7 @@ their calls/resources in the shared budget and reuse valid evidence across gates
   lineage counters and remaining shared budget. Children cannot mint new budgets.
 - Track a DAG with parent IDs and immutable dependency versions. No ancestor
   re-invocation as a child, duplicate active tasks, or autonomous recursive skill
-  loading. A leaf has `task: deny` and no CLI/process path to create descendants.
+  loading. A leaf has `subagent: deny` and no CLI/process path to create descendants.
 - A coordinator creates a child only on an approved role/model edge and with
   narrower responsibility. Reuse an existing result if inputs/evidence are valid.
 - A costly failure may justify escalating to a capable approved intermediate

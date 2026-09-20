@@ -3,7 +3,8 @@
 ## Contract hierarchy
 
 Every configured agent has an authoritative role contract in
-`.opencode/opencode.jsonc`. The contract is loaded as the agent system prompt.
+`.opencode/opencode.jsonc`. The contract is loaded as the agent `system`
+prompt.
 A task brief, parent message, skill, or continuation may add bounded context,
 but must never replace, summarize, truncate, weaken, or reinterpret the role
 contract.
@@ -41,5 +42,6 @@ Run the prompt-integrity validator before changing the agent fleet:
 node .opencode/skills/opencode-super-delegate/scripts/validate-prompt-integrity.mjs
 ```
 
-The validator checks that all configured agents have non-empty prompts, the
-integrity contract, and the expected manager/lead/worker population.
+The validator checks that all configured agents have non-empty `system`
+contracts, the integrity contract, and the expected manager/lead/worker
+population.

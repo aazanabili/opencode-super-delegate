@@ -8,7 +8,7 @@ permission key. A model label or an @ mention does not grant authority.
 ## Automatic helpers
 
 Default to read/search and **read-only terminal operations**, never unrestricted
-`bash: allow`. Shell redirection, interpreters, project scripts, package hooks,
+`shell: allow`. Shell redirection, interpreters, project scripts, package hooks,
 Git aliases, plugins and subprocesses can write even with `edit: deny`.
 Use a read-only sandbox/controlled runner for terminal inspection where supported;
 otherwise deny shell access and use dedicated read/search tools. Explicitly deny
@@ -18,22 +18,23 @@ Example OpenCode agent permission fragment (merge into a verified agent entry):
 
 ```json
 {
-  "permission": {
-    "*": "deny",
-    "read": { "*": "allow", "*.env": "deny", "*.env.*": "deny" },
-    "glob": "allow",
-    "grep": "allow",
-    "list": "allow",
-    "edit": "deny",
-    "bash": "deny",
-    "task": { "*": "deny", "sd-leaf-inventory": "allow" }
-  }
+  "permissions": [
+    { "action": "*", "resource": "*", "effect": "deny" },
+    { "action": "read", "resource": "*", "effect": "allow" },
+    { "action": "read", "resource": "*.env", "effect": "deny" },
+    { "action": "read", "resource": "*.env.*", "effect": "deny" },
+    { "action": "glob", "resource": "*", "effect": "allow" },
+    { "action": "grep", "resource": "*", "effect": "allow" },
+    { "action": "subagent", "resource": "*", "effect": "deny" },
+    { "action": "subagent", "resource": "sd-leaf-inventory", "effect": "allow" }
+  ]
 }
 ```
 
 This is a starting fragment, not a sandbox or exhaustive secret filter. Inspect
 effective merged permissions and actual tool behavior. Leaf agents use
-`task: deny`. Last matching pattern wins: wildcard defaults must appear first.
+`subagent` with `effect: deny`. Last matching pattern wins: wildcard defaults
+must appear first.
 Allow only explicit approved child agent IDs; each has a fixed approved model.
 Do not allow a helper to bypass child restrictions by launching another CLI.
 

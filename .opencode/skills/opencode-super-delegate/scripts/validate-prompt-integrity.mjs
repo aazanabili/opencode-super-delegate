@@ -5,13 +5,13 @@ const root = process.cwd();
 const configPath = path.join(root, ".opencode", "opencode.jsonc");
 const source = fs.readFileSync(configPath, "utf8").replace(/^\s*\/\/.*$/gm, "");
 const config = JSON.parse(source.replace(/^\uFEFF/, ""));
-const agents = config.agent ?? {};
+const agents = config.agents ?? {};
 const entries = Object.entries(agents);
 const requiredMarker = "PROMPT INTEGRITY CONTRACT v1";
 const missing = entries.filter(([, agent]) =>
-  typeof agent.prompt !== "string" ||
-  !agent.prompt.trim() ||
-  !agent.prompt.includes(requiredMarker),
+  typeof agent.system !== "string" ||
+  !agent.system.trim() ||
+  !agent.system.includes(requiredMarker),
 );
 
 const expectedGroups = [
@@ -38,9 +38,9 @@ for (const [prefix, expected] of expectedGroups) {
 }
 
 if (missing.length || populationErrors.length) {
-  if (missing.length) console.error(`Missing or incomplete prompt contract: ${missing.map(([id]) => id).join(", ")}`);
+  if (missing.length) console.error(`Missing or incomplete system contract: ${missing.map(([id]) => id).join(", ")}`);
   for (const error of populationErrors) console.error(error);
   process.exit(1);
 }
 
-console.log(`Prompt integrity OK: ${entries.length} agents validated.`);
+console.log(`System contract integrity OK: ${entries.length} agents validated.`);
