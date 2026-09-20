@@ -71,6 +71,7 @@ Read the linked module at its trigger, not the entire reference directory.
 | Final integration / response | [Integration](references/10-integration-reporting.md) |
 | Comprehensive feature discovery / web research / Git checkpoint | [Discovery and Git workflow](references/19-discovery-and-git-workflow.md) |
 | Prompt preservation / context continuity | [Prompt integrity](references/20-prompt-integrity.md) |
+| Jev decision intelligence / advisory authority | [Jev decision lead](references/21-jev-decision-lead.md) |
 
 ## Sequence
 

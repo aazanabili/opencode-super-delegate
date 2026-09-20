@@ -21,6 +21,7 @@ const expectedGroups = [
   ["testing-lead", 1],
   ["security-lead", 1],
   ["seo-lead", 1],
+  ["decision-intelligence-lead", 1],
   ["pp-worker-", 6],
   ["cc-worker-", 6],
   ["test-worker-", 6],
