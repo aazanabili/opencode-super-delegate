@@ -21,7 +21,19 @@ regression likelihood, dependency conflicts, and plan quality.
    which runs the wrapper and returns a structured result to the lead and Manager.
 4. The Manager gives relevant advisory findings back to each lead for a focused
    refinement pass.
-5. Leads retain ownership of their plans; the Manager retains final authority.
+5. Workers include bounded evidence, failed checks, uncertainty, and escalation
+   questions in their reports; the decision-intelligence lead may send that
+   filtered evidence to Jev for a result-quality or correction assessment.
+6. Leads retain ownership of their plans; the Manager retains final authority.
+
+## Role coverage without duplicate calls
+
+Manager, leads, and workers all participate in the Jev advisory loop, but only
+the approved `jev-worker` calls TypeSafe. The Manager requests scope and final
+gate evaluations, leads request plan/dependency evaluations, and worker results
+are evaluated only at high-value gates or when a failure is ambiguous. Do not
+call Jev for every trivial action, and do not send the API key, full repository,
+secrets, or unfiltered worker transcripts to the evaluator.
 
 ## Availability contract
 
