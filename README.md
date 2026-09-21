@@ -137,6 +137,141 @@ preflight and decomposition. Children stay within the approved tree and shared
 budgets. New out-of-scope authority requires a focused decision; routine work
 within the approved bounds does not repeat the approval flow.
 
+## TypeSafe Jev advisory layer
+
+Jev is used as a bounded, advisory evaluator through the TypeSafe System One
+endpoint. It does not write code, replace deterministic tests, or own the final
+decision. The practical flow is:
+
+```text
+Manager: scope, risk and routing evaluation
+  ↓
+Leads: detailed plans and task decomposition
+  ↓ Jev evaluates plan completeness, dependencies and risk
+Workers: bounded implementation, tests and evidence
+  ↓ Jev evaluates selected results, failures and escalation need
+Lead: reconciliation and correction tasks
+  ↓
+Manager: final acceptance
+```
+
+All levels use Jev evidence, but they do not all call the provider directly.
+The approved `jev-worker` is the only component that runs the wrapper. This
+prevents duplicate calls and keeps the API key out of ordinary worker prompts.
+Jev is called at high-value gates: scope, lead plan, ambiguous or failed worker
+results, and final acceptance. For trivial tasks, deterministic execution can
+continue without a Jev call.
+
+If TypeSafe is unavailable, the result is recorded as advisory `unavailable`
+and deterministic planning, testing and review continue. It is never treated
+as PASS or FAIL.
+
+### TypeSafe environment variables
+
+Never put credentials in `opencode.jsonc`, `SKILL.md`, prompts, source files or
+Git. Configure these variables in the shell or secret manager that starts
+OpenCode:
+
+```text
+TYPESAFE_API_KEY=your-rotated-key
+TYPESAFE_API_URL=https://api.typesafe.ai/v1/systemone
+TYPESAFE_JEV_MODEL=jev-latest
+JEV_MAX_RETRIES=2
+JEV_RETRY_BASE_MS=400
+```
+
+On Windows PowerShell, for the current terminal only:
+
+```powershell
+$env:TYPESAFE_API_KEY = "YOUR_NEW_KEY"
+$env:TYPESAFE_JEV_MODEL = "jev-latest"
+opencode
+```
+
+For future terminals, use `setx` with a newly rotated key, then restart
+OpenCode. Do not paste the key into chat or commit it. For CI, create a secret
+named `TYPESAFE_API_KEY` and expose it only to the job that runs the evaluator.
+
+## Installing on a new machine
+
+### 1. Install prerequisites
+
+Install Git, OpenCode V2, and authenticate the providers whose models you plan
+to use. Verify the runtime before installing the fleet:
+
+```powershell
+opencode --version
+git --version
+opencode debug config
+```
+
+### 2. Clone and install the global OpenCode configuration
+
+```powershell
+git clone https://github.com/aazanabili/opencode-super-delegate.git
+Set-Location opencode-super-delegate
+
+$global = Join-Path $HOME '.config\opencode'
+$backup = Join-Path $global ('opencode.jsonc.backup-' + (Get-Date -Format 'yyyyMMdd-HHmmss'))
+New-Item -ItemType Directory -Path $global -Force | Out-Null
+if (Test-Path (Join-Path $global 'opencode.jsonc')) {
+  Copy-Item (Join-Path $global 'opencode.jsonc') $backup
+}
+Copy-Item '.opencode\opencode.jsonc' (Join-Path $global 'opencode.jsonc') -Force
+
+$skills = Join-Path $global 'skills'
+New-Item -ItemType Directory -Path $skills -Force | Out-Null
+Copy-Item '.opencode\skills\opencode-super-delegate' (Join-Path $skills 'opencode-super-delegate') -Recurse -Force
+Copy-Item '.opencode\skills\github-operations' (Join-Path $skills 'github-operations') -Recurse -Force
+Copy-Item '.opencode\skills\jev-decision-intelligence' (Join-Path $skills 'jev-decision-intelligence') -Recurse -Force
+```
+
+Restart OpenCode after changing global configuration. Global configuration is
+loaded from `%USERPROFILE%\.config\opencode\opencode.jsonc`; a project's
+`.opencode/opencode.jsonc` has higher precedence and may override it.
+
+### 3. Select a model for each agent
+
+Every agent has its own `model` field in `opencode.jsonc`:
+
+```jsonc
+{
+  "agents": {
+    "manager": { "model": "openai/gpt-5.6-sol" },
+    "project-plan-lead": { "model": "openai/gpt-5.6-terra" },
+    "pp-worker-1": { "model": "openai/gpt-5.6-luna" },
+    "jev-worker": { "model": "openai/gpt-5.6-luna" }
+  }
+}
+```
+
+Use a model ID that is actually available to your provider. The recommended
+tier pattern is:
+
+| Agent group | Role | Typical model tier |
+|---|---|---|
+| `manager` | final routing and acceptance | strongest available |
+| `*-lead` | analysis, decomposition and review | cheaper capable model |
+| `*-worker` | bounded implementation and tests | economical model |
+| `jev-worker` | TypeSafe wrapper execution only | economical tool-capable model |
+
+The model configured for `jev-worker` is the OpenCode model that prepares and
+returns the TypeSafe request; the Jev model itself is selected independently by
+`TYPESAFE_JEV_MODEL`.
+
+List accessible models with:
+
+```powershell
+opencode models
+```
+
+After changing an agent model, run:
+
+```powershell
+opencode debug config
+node .opencode\skills\opencode-super-delegate\scripts\validate-prompt-integrity.mjs
+```
+
 Optional [workflow YAML](.opencode/skills/opencode-super-delegate/references/09-yaml-overrides.md)
 can specify exact role models and ceilings. It is input to the skill, not a native
 OpenCode configuration file. Replace all placeholder model IDs before use.
