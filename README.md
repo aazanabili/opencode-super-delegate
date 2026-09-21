@@ -28,6 +28,9 @@ savings percentage or universal correctness.
   budgets and requested Git actions.
 - Project Plan acceptance, Testing, Clean Code review and a Security decision tied to the
   same candidate. Sensitive work receives security review from design onward.
+- A first-class `github-operations-lead` with GitHub Flow, PR, Issues, release,
+  GitHub Actions, and scoped repository-governance skills. External GitHub side
+  effects remain approval-gated.
 
 This is an **instruction package**, not an installed agent fleet, YAML executor,
 process supervisor or permission sandbox. Its host uses actual OpenCode tools and
@@ -196,6 +199,7 @@ See [policy completeness](.opencode/skills/opencode-super-delegate/references/00
 README.md
 docs/
   REVIEW.md
+  GITHUB_OPERATIONS_WORKFLOW.md
 .gitattributes
 .gitignore
 .opencode/
@@ -212,6 +216,9 @@ docs/
       clean-code-source.md   # original compact + full text
       project-plan-source.md
       security-source.md
+.opencode/skills/github-operations/
+  SKILL.md
+  git-workflow/ … github-governance/
 ```
 
 Runtime evidence belongs to the target project's coordination directory, not

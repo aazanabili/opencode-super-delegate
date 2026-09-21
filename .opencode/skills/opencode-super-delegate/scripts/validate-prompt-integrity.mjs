@@ -22,11 +22,13 @@ const expectedGroups = [
   ["security-lead", 1],
   ["seo-lead", 1],
   ["decision-intelligence-lead", 1],
+  ["github-operations-lead", 1],
   ["pp-worker-", 6],
   ["cc-worker-", 6],
   ["test-worker-", 6],
   ["sec-worker-", 6],
   ["seo-worker-", 6],
+  ["github-", 5],
 ];
 
 const populationErrors = [];
