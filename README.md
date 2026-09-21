@@ -245,6 +245,18 @@ Every agent has its own `model` field in `opencode.jsonc`:
 }
 ```
 
+The native delegation tree requires a depth of `2` for the approved
+`Manager → Lead → Worker` path. Do not increase it unless a deeper tree is
+explicitly reviewed, because depth increases fan-out and token consumption:
+
+```jsonc
+{
+  "experimental": {
+    "subagent_depth": 2,
+  },
+}
+```
+
 Use a model ID that is actually available to your provider. The recommended
 tier pattern is:
 
