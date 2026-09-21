@@ -3,3 +3,8 @@
 *.log
 .DS_Store
 Thumbs.db
+
+# Local provider credentials; never commit API keys.
+.env
+.env.*
+!.env.example

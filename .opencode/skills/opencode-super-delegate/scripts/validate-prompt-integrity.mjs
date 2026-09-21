@@ -29,6 +29,7 @@ const expectedGroups = [
   ["sec-worker-", 6],
   ["seo-worker-", 6],
   ["github-", 5],
+  ["jev-worker", 1],
 ];
 
 const populationErrors = [];
