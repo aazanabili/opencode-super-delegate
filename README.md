@@ -237,10 +237,10 @@ Every agent has its own `model` field in `opencode.jsonc`:
 ```jsonc
 {
   "agents": {
-    "manager": { "model": "openai/gpt-5.6-sol" },
-    "project-plan-lead": { "model": "openai/gpt-5.6-terra" },
-    "pp-worker-1": { "model": "openai/gpt-5.6-luna" },
-    "jev-worker": { "model": "openai/gpt-5.6-luna" }
+    "manager": { "model": "openai/gpt-6-luna" },
+    "project-plan-lead": { "model": "openai/gpt-6-luna" },
+    "pp-worker-1": { "model": "openai/gpt-6-luna" },
+    "jev-worker": { "model": "openai/gpt-6-luna" }
   }
 }
 ```
