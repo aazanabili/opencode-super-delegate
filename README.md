@@ -288,6 +288,206 @@ Optional [workflow YAML](.opencode/skills/opencode-super-delegate/references/09-
 can specify exact role models and ceilings. It is input to the skill, not a native
 OpenCode configuration file. Replace all placeholder model IDs before use.
 
+#### Bulk model change script (`tmp/Set-OCModels.ps1`)
+
+`tmp/Set-OCModels.ps1` rewrites the `model` field of every managed agent in
+`opencode.jsonc` — the single `manager`, the 7 leads (`project-plan-lead`,
+`clean-code-lead`, `testing-lead`, `security-lead`, `seo-lead`,
+`decision-intelligence-lead`, `github-operations-lead`) and the 35 workers
+(the `pp-worker-*`, `cc-worker[-]?`, `test-worker-*`, `sec-worker-*`,
+`seo-worker-*`, `github-*-worker` and `jev-worker` agents).
+
+Two files can be targeted, depending on `-Scope`:
+
+- **Project file** — the nearest `.opencode\opencode.jsonc` to your
+  **current working directory**, found by walking upward.
+- **Global file** — `%USERPROFILE%\.config\opencode\opencode.jsonc`.
+
+##### Prerequisites
+
+- **PowerShell 5.1 minimum** (the script declares `#requires -Version 5.1`).
+  Windows PowerShell 5.1 ships with Windows 10/11; PowerShell 7 (`pwsh`)
+  also works.
+- The **global file must already exist and be readable**, even when you
+  only plan to update the project file: presets initialize their default
+  values from the current global models at startup. Run `opencode debug
+  config` at least once before the first run if it is missing.
+- Run the script **from inside the target project directory**, because
+  `-Scope all` and `-Scope project` both walk upward from the current
+  working directory to locate the project file. The script's own location
+  does not determine the project root.
+
+##### Invocation
+
+```powershell
+# Windows PowerShell 5.1
+powershell -File .\tmp\Set-OCModels.ps1 ...
+
+# PowerShell 7 (recommended)
+pwsh .\tmp\Set-OCModels.ps1 ...
+```
+
+Every example below uses `pwsh`; substitution with `powershell -File
+.\tmp\Set-OCModels.ps1` is equivalent on Windows PowerShell 5.1.
+
+##### Parameters
+
+| Parameter | Accepted values | Default | Effect |
+|---|---|---|---|
+| `-Scope` | `all` \| `project` \| `global` | `all` | Which `opencode.jsonc` file(s) to edit |
+| `-Preset` | `default` \| `workers-m3` \| `all-m3` \| `all-gpt5` | `default` | Pre-fills target values; see presets below |
+| `-Manager` | any model ID (string) | current global `manager` | New model for `manager` |
+| `-Leads` | any model ID (string) | current global lead | New model for every lead |
+| `-Workers` | any model ID (string) | current global worker | New model for every worker |
+| `-Yes` | switch | off | Skip the final `Apply? [Y/n]` confirmation |
+| `-Interactive` | switch | off | Use the interactive picker (writes immediately, see below) |
+
+Any group parameter (`-Manager`/`-Leads`/`-Workers`) **overrides** the
+value supplied by `-Preset` for that group only. Agent groups not
+mentioned are left untouched (no cross-group replacement, no
+deletion-style fill). PowerShell parameter names are case-insensitive
+but the canonical spellings above are recommended.
+
+With no group parameter and `-Preset default`, the script prints
+"Nothing to do." and exits without writing anything (so `pwsh
+.\tmp\Set-OCModels.ps1 -Scope project -Yes` is a no-op).
+
+##### Preset → target mapping
+
+| Preset | Manager | Leads | Workers |
+|---|---|---|---|
+| `default` | current global `manager` model | current global lead model | current global worker model |
+| `workers-m3` | unchanged | unchanged | `minimax-coding-plan/MiniMax-M3#thinking` |
+| `all-m3` | `minimax-coding-plan/MiniMax-M3#thinking` | `minimax-coding-plan/MiniMax-M3#thinking` | `minimax-coding-plan/MiniMax-M3#thinking` |
+| `all-gpt5` | current global `manager` model | current global lead model | current global worker model |
+
+`all-gpt5` re-applies whichever three model IDs the global file currently
+holds (for example the `*-sol` / `*-terra` / `*-luna` family if that is
+your setup). Pair a group parameter with a preset to override just that
+group; the other groups still follow the preset.
+
+##### Scope matrix
+
+| `-Scope` | Project file required | Global file required | Files updated |
+|---|---|---|---|
+| `all` | yes (walked up from CWD) | yes (must exist and be readable) | project + global |
+| `project` | yes | **yes** (read at startup for preset seeding) | project only |
+| `global` | no | yes | global only |
+
+A missing or unreadable project file under `-Scope all` / `-Scope project`
+fails fast; a missing or unreadable global file fails fast under every
+scope.
+
+##### Representative commands
+
+Every preset:
+
+```powershell
+# workers-m3: workers on M3, manager + leads untouched (both files)
+pwsh .\tmp\Set-OCModels.ps1 -Preset workers-m3
+
+# all-m3: all three groups on M3, global file only
+pwsh .\tmp\Set-OCModels.ps1 -Preset all-m3 -Scope global
+
+# all-gpt5: re-apply whatever models the global file currently has, both files
+pwsh .\tmp\Set-OCModels.ps1 -Preset all-gpt5 -Scope all -Yes
+
+# default: no-op (prints the "Nothing to do." banner)
+pwsh .\tmp\Set-OCModels.ps1
+```
+
+Every group parameter on its own:
+
+```powershell
+# Update only the manager in both files
+pwsh .\tmp\Set-OCModels.ps1 -Manager 'openai/gpt-5.6-sol'
+
+# Update only the leads in the project file
+pwsh .\tmp\Set-OCModels.ps1 -Leads 'openai/gpt-5.6-terra' -Scope project
+
+# Update only the workers in the global file (no confirmation prompt)
+pwsh .\tmp\Set-OCModels.ps1 -Workers 'openai/gpt-5-mini' -Scope global -Yes
+```
+
+Combined group parameters (any subset is allowed):
+
+```powershell
+pwsh .\tmp\Set-OCModels.ps1 `
+  -Manager 'openai/gpt-5.6-sol' `
+  -Leads   'openai/gpt-5.6-terra' `
+  -Workers 'minimax-coding-plan/MiniMax-M3#thinking' `
+  -Scope   all
+```
+
+Combining a preset with one group override — preset drives two groups,
+the parameter overrides the third:
+
+```powershell
+pwsh .\tmp\Set-OCModels.ps1 -Preset workers-m3 -Manager 'openai/gpt-5.6-sol'
+```
+
+Interactive picker:
+
+```powershell
+pwsh .\tmp\Set-OCModels.ps1 -Interactive
+```
+
+##### Interactive picker (`-Interactive`)
+
+```powershell
+pwsh .\tmp\Set-OCModels.ps1 -Interactive
+```
+
+The picker offers a four-step nested menu — group → agents within the
+group → provider → model — and **writes each change immediately** to
+the files in scope. It does **not** print a preview, does **not** ask
+`Apply? [Y/n]`, and `-Yes` has no effect here.
+
+- The group menu exposes only `manager` (1 agent), `leads` (7 agents)
+  and `workers` (35 agents); press `q` to quit. A per-agent picker is
+  not surfaced even though helper functions for it exist in the script.
+- Within a group, press Enter (or type `all`) to apply to every agent,
+  or pick by index: `1,3,5` or `9-12`.
+- The provider list prefers `~/.config\opencode\cache\models-catalog.json`
+  and falls back to parsing the textual output of `opencode models`.
+- If the chosen model carries a `#variant` (for example `#thinking`) and
+  the base id matches the current sample, the picker prompts `Keep
+  current variant '#thinking' on the new model? [Y/n]`.
+- Press `q` at any picker prompt to quit (as documented for the group menu).
+
+##### Safety, backups and rollback
+
+For every file the script edits it:
+
+1. Copies the original to `<file>.backup-yyyyMMdd-HHmmss` (local time).
+2. Replaces only the matching `"model": "<old>"` value, preserving the
+   rest of the line, indentation and `//` comments.
+3. Validates the rewritten file as JSON (after stripping `//` comments);
+   if parsing fails, **restores the backup** and aborts that file.
+
+The project and global files are processed **sequentially, one at a
+time**. The script does **not** promise cross-file atomicity: a failure
+on the second file is not rolled back to the first. In the explicit-CLI
+batch path a JSON error halts the rest of the batch; in interactive mode
+a JSON error logs a `Restored backup.` line and moves on to the next
+file. Inspect any leftover `opencode.jsonc.backup-*` files and archive
+or delete them once the new configuration is verified.
+
+##### Restart OpenCode
+
+The script ends with `Done. Restart OpenCode to pick up the new models.`
+Existing OpenCode sessions keep their already-loaded configuration;
+only freshly started sessions honour the updated `model` fields.
+
+```powershell
+# quit any running opencode session, then:
+opencode
+opencode debug config
+```
+
+Verify the active configuration with `opencode debug config` or
+`opencode models` before resuming normal work.
+
 ## Permissions, quality and cost
 
 ### Automatic persistent testing
