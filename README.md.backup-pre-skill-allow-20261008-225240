@@ -40,10 +40,8 @@ not merely instructed:
 - The 8 advisors — `edit`, `shell`, and `subagent` denied.
 - `ephemeral-worker` — `edit` and `shell` allowed; `subagent` denied
   (Sub-subagent Prohibition).
-- The `skill` permission action is allowed for all 10 agents (explicit
-  `{ "action": "skill", "resource": "*", "effect": "allow" }` as the first
-  permission entry of each agent). This project does not ship its own skills
-  directory; skills are loaded from the user's OpenCode skills.
+- The `skill` permission action is denied for every agent: **this project ships
+  no skills** and loads none.
 
 Any denied invocation fails with the guardrail error from `AGENTS.md` §5:
 `"Permission Denied: Agent role is restricted to Read-Only planning & analysis."`
@@ -101,8 +99,7 @@ GitHub side effects remain user-approved per action class — see
 
 1. Place `AGENTS.md` at the project root (done in this repository) or adapt it
    per project.
-2. Keep `.opencode/opencode.json` in place; agents may use the user's OpenCode
-   skills (allowed by the `skill` permission above), but the project ships none.
+2. Keep `.opencode/opencode.json` in place; no skills are required or loaded.
 3. Quit and restart OpenCode — existing sessions keep their previously loaded
    configuration, so only fresh sessions enforce the new permission matrix.
 

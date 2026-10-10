@@ -1,6 +1,6 @@
 const endpoint = process.env.TYPESAFE_API_URL ?? "https://api.typesafe.ai/v1/systemone";
 const apiKey = process.env.TYPESAFE_API_KEY;
-const primaryModel = process.env.TYPESAFE_JEV_MODEL ?? "jev-latest";
+const primaryModel = process.env.TYPESAFE_JEV_MODEL ?? "jev-1.13.0";
 const maxRetries = Number.parseInt(process.env.JEV_MAX_RETRIES ?? "2", 10);
 const retryBaseMs = Number.parseInt(process.env.JEV_RETRY_BASE_MS ?? "400", 10);
 
@@ -79,23 +79,23 @@ if (attempt.ok) {
     usage: attempt.result.usage,
     attempts: [primaryModel],
   }, null, 2));
-  process.exit(0);
+} else {
+  process.stdout.write(JSON.stringify({
+    advisory_only: true,
+    status: "unavailable",
+    provider: "typesafe",
+    code: attempt.failure?.status === 429
+      ? "RATE_LIMITED"
+      : attempt.failure?.status === 529
+        ? "TYPESAFE_OVERLOADED"
+        : "JEV_REQUEST_FAILED",
+    message: "Jev was unavailable; no advisory decision was produced.",
+    endpoint,
+    attempts: [{ model: primaryModel, failure: attempt.failure }],
+    next_step: "Continue with deterministic lead planning and retry Jev later; do not treat this as PASS or FAIL.",
+  }, null, 2));
 }
-
-process.stdout.write(JSON.stringify({
-  advisory_only: true,
-  status: "unavailable",
-  provider: "typesafe",
-  code: attempt.failure?.status === 429
-    ? "RATE_LIMITED"
-    : attempt.failure?.status === 529
-      ? "TYPESAFE_OVERLOADED"
-      : "JEV_REQUEST_FAILED",
-  message: "Jev was unavailable; no advisory decision was produced.",
-  endpoint,
-  attempts: [{ model: primaryModel, failure: attempt.failure }],
-  next_step: "Continue with deterministic lead planning and retry Jev later; do not treat this as PASS or FAIL.",
-}, null, 2));
-// Unavailability is a valid advisory outcome. Keep the process successful so
-// the Manager can consume the structured result and continue deterministic work.
-process.exit(0);
+// Unavailability is a valid advisory outcome. The process still exits 0 once the
+// event loop drains naturally, so the Manager can consume the structured result
+// and continue deterministic work.
+process.exitCode = 0;

@@ -1,30 +1,32 @@
 # GitHub Operations Workflow
 
+Git and GitHub work follows the standard operational workflow in `AGENTS.md`,
+with `git-agent` as the read-only advising specialist and Ephemeral Dynamic
+Workers as the only executors.
+
 ```text
-Manager
-└── github-operations-lead
+User
+└── Primary Orchestrator
     ├── Read-only preflight
     │   ├── branch / HEAD / remotes / worktree
     │   ├── default branch and repository policy
     │   ├── existing PRs, Issues, releases, and workflows
     │   └── required permissions and approval classes
-    ├── Route to one skill
-    │   ├── git-workflow
-    │   ├── github-pr
-    │   ├── github-issues
-    │   ├── github-release
-    │   ├── github-actions
-    │   └── github-governance
-    ├── Approval gates
+    ├── git-agent (Static Advisor, read-only)
+    │   ├── branch naming and staging plan
+    │   ├── atomic Conventional Commit messages
+    │   ├── PR template and merge-conflict strategy
+    │   └── exact Git steps for workers to execute
+    ├── Approval gates (user-approved action classes)
     │   ├── local branch / commit
     │   ├── push / PR
     │   ├── merge / branch deletion
     │   ├── workflow dispatch / rerun
     │   ├── tag / release
     │   └── repository governance settings
-    ├── Execute bounded worker task
-    ├── Verify actual result and external ID/URL
-    └── Return evidence report to Manager
+    ├── Ephemeral Worker executes the bounded Git/GitHub task
+    ├── verification-agent audits the final diff against requirements
+    └── Status report (SUCCESS / FAILURE) returns to the Orchestrator
 ```
 
 The default policy is GitHub Flow. External actions are never inferred from a
